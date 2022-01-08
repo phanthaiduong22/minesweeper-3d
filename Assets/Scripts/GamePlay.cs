@@ -33,16 +33,6 @@ public class GamePlay : MonoBehaviour
 	void Update()
 	{
 		CheckClicked();
-		// if (Input.GetMouseButtonUp(0))
-		// {
-		// 	Vector3 touchPosition = cam.ScreenToWorldPoint(Input.mousePosition);
-
-		// 	Collider3D hit = Physics3D.OverlapCircle(touchPosition, touchRadius, boxesLayerMask);
-		// 	if (hit)
-		// 	{
-		// 		HitCube();
-		// 	}
-		// }
 	}
 
 	void CheckClicked()
@@ -53,7 +43,6 @@ public class GamePlay : MonoBehaviour
 			{
 				for (int k = 0; k < heights; ++k)
 				{
-
 					// Activate nearby cubes
 					ActivateNearbyCubes(i, j, k);
 				}
@@ -74,8 +63,13 @@ public class GamePlay : MonoBehaviour
 		if (cubesArray[x, y, z].isClicked == 1)
 		{
 			cubesArray[x, y, z].isClicked = -1;
-			cubesArray[x, y, z].DestroyCube();
-			cubesArray[x, y, z].DisplayColor();
+			// Solution 0: Destroy Cube (deprecated)
+			// cubesArray[x, y, z].DestroyCube();
+
+			// Solution 1: scale down the Cube and scale up the Text
+			int cntBombs = CountNearbyBombs(x, y, z);
+			// print(cntBombs);
+			cubesArray[x, y, z].DisplayBox(cntBombs);
 			for (int i = 0; i < 27; i++)
 			{
 				int x1 = x + dx[i], y1 = y + dy[i], z1 = z + dz[i];
@@ -88,7 +82,7 @@ public class GamePlay : MonoBehaviour
 		}
 	}
 
-	int CountNearbyBombs(int x, int y, int z)
+	int CountNearbyBombs(int x, int y, int z) // calculate itself, but itself can not be a bomb
 	{
 		int ans = 0;
 		for (int i = 0; i < 27; i++)

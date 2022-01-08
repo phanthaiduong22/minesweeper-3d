@@ -5,12 +5,14 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
 	private Renderer renderer;
-	public GameObject gamePlay;
+	// public GameObject gamePlay;
 	public int isBomb;
 	public int x;
 	public int y;
 	public int z;
 	public int isClicked;
+	public MeshRenderer meshRender;
+	public CubeText cubeText;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -24,7 +26,7 @@ public class Cube : MonoBehaviour
 	void Update()
 	{
 		renderer = GetComponent<Renderer>();
-		transform.Rotate(new Vector3(0f, 100f, 0f) * Time.deltaTime);
+		// transform.Rotate(new Vector3(0f, 100f, 0f) * Time.deltaTime);
 		if (Input.GetMouseButtonDown(0))
 		{
 			RaycastHit hit;
@@ -35,8 +37,6 @@ public class Cube : MonoBehaviour
 				if (hit.transform != null)
 				{
 					ClickCube(hit.transform.gameObject);
-
-					// Todo: Animation to that cubes
 				}
 			}
 		}
@@ -78,7 +78,7 @@ public class Cube : MonoBehaviour
 			renderer.material.color = Color.white;
 		}
 	}
-	public void DisplayColor()
+	public void DisplayBox(int cntBombs)
 	{
 		if (isBomb == 1)
 		{
@@ -88,6 +88,10 @@ public class Cube : MonoBehaviour
 		{
 			renderer.material.color = Color.green;
 		}
+		// meshRender.enabled = false;
+		transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+		cubeText.MeshRenderEnable();
+		cubeText.ChangeTextMesh(cntBombs);
 	}
 
 	public void PrintState()
