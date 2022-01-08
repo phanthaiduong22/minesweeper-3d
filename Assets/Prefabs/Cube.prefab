@@ -115,6 +115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshRender: {fileID: 8075390865534261101}
   textMesh: {fileID: 668887274053678452}
+  CameraToFollow: {fileID: 4257845586674020872, guid: 6e36e1bea38e90691b00e56842099fdc, type: 3}
+  DistanceFromCamera: 0
 --- !u!1 &6162109871269288725
 GameObject:
   m_ObjectHideFlags: 0

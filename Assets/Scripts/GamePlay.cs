@@ -24,7 +24,7 @@ public class GamePlay : MonoBehaviour
 		rows = 9;
 		cols = 9;
 		heights = 9;
-		randomProportion = 30;
+		randomProportion = 10;
 		CreateCubes(rows, cols, heights);
 
 	}
