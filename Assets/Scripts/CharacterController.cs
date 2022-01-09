@@ -40,7 +40,7 @@ public class CharacterController : MonoBehaviour
     private void ColorChange(int value)
     {
         string[] color = {"red","orange","yellow","blue","green"};
-        GetComponent<Renderer>().material.SetColor("_Color", color[value]);
+        GetComponent<Renderer>().material.SetColor("_Color", Color.color[value]);
     }
     private void DetectMine()
     {
