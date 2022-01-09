@@ -14,6 +14,7 @@ public class CharacterController : MonoBehaviour
 
     private Brick mCurrentBrick;
 
+    public GameOverController gameOver;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,19 +25,25 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit)) {
-                GameObject hitObject = hit.transform.gameObject;
-                Brick brick = hitObject.GetComponent<Brick>();
-                if (brick != null) {
-                    mMeshAgent.SetDestination(hit.transform.position);
+        if (blood == 0){
+            gameOver.Setup();
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0)) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit)) {
+                    GameObject hitObject = hit.transform.gameObject;
+                    Brick brick = hitObject.GetComponent<Brick>();
+                    if (brick != null) {
+                        mMeshAgent.SetDestination(hit.transform.position);
+                    }
                 }
             }
-        }
 
-        DetectMine();
+            DetectMine();
+        }
     }
 
     private void ColorChange(int value)
