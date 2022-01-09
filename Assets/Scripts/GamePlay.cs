@@ -16,14 +16,29 @@ public class GamePlay : MonoBehaviour
 	public int[] dx = { -1, -1, -1, 0, 0, 0, 1, 1, 1, -1, -1, -1, 0, 0, 0, 1, 1, 1, -1, -1, -1, 0, 0, 0, 1, 1, 1 };
 	public int[] dy = { -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1 };
 	public int[] dz = { -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-	Cube[,,] cubesArray = new Cube[9, 9, 9];
+	Cube[,,] cubesArray = new Cube[50, 50, 50];
 	void Start()
 	{
 		// GameObject gameClone = Instantiate(cube);
 		// cam = Camera.main;
-		rows = 5;
-		cols = 5;
-		heights = 5;
+		switch (GameValues.Difficulty)
+		{
+			case GameValues.Difficulties.Easy:
+				rows = 5;
+				cols = 5;
+				heights = 5;
+				break;
+			case GameValues.Difficulties.Medium:
+				rows = 10;
+				cols = 10;
+				heights = 10;
+				break;
+			case GameValues.Difficulties.Hard:
+				rows = 20;
+				cols = 20;
+				heights = 20;
+				break;
+		}
 		randomProportion = 10;
 		CreateCubes(rows, cols, heights);
 
