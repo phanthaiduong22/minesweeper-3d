@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -48425,6 +48425,86 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7042729768475770344, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729768475770344, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729768475770344, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729768475770344, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729768475770344, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729768475770344, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729768475770344, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729768475770345, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 57
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -273
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042729769991940823, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 245
+      objectReference: {fileID: 0}
     - target: {fileID: 7042729770084682855, guid: 7dc13b82c23b24375a6b682a4a6bf5fe, type: 3}
       propertyPath: m_Name
       value: HealthBar
