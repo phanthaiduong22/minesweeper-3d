@@ -7,6 +7,7 @@ public class CharacterController : MonoBehaviour
 {
     private bool stepOn = true;
     public int blood = 5;
+    private int blood_sum;
 
     private NavMeshAgent mMeshAgent;
 
@@ -14,10 +15,14 @@ public class CharacterController : MonoBehaviour
 
     private Brick mCurrentBrick;
 
-    public GameOverController gameOver;
+    public GameOverController GameOver;
+
+    public HealthBarController HealthBar;
+
     // Start is called before the first frame update
     void Start()
     {
+        blood_sum = blood;
         GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         mMeshAgent = GetComponent<NavMeshAgent>();
     }
@@ -26,7 +31,7 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         if (blood == 0){
-            gameOver.Setup();
+            GameOver.Setup();
         }
         else
         {
@@ -68,7 +73,8 @@ public class CharacterController : MonoBehaviour
                     mMeshAgent.SetDestination(mPreviousBrick.transform.position);
                     blood -= 1;
                     stepOn = false;
-                    ColorChange(blood);
+                    // ColorChange(blood);
+                    HealthBar.updateHealth((float)blood/(float)blood_sum);
                 } else 
                 if (!brick.mine)
                 {
