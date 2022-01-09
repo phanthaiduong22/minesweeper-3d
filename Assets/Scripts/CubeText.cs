@@ -20,8 +20,8 @@ public class CubeText : MonoBehaviour
 	{
 		// transform.position = CameraToFollow.transform.position + CameraToFollow.transform.forward * DistanceFromCamera;
 		// transform.LookAt(Camera.main.transform);
-		transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
-Camera.main.transform.rotation * Vector3.up);
+		/*transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
+			Camera.main.transform.rotation * Vector3.up);*/
 	}
 
 	public void MeshRenderEnable()
