@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class CharacterController : MonoBehaviour
 {
+    private bool stepOn = true;
     public int blood = 5;
 
     private NavMeshAgent mMeshAgent;
@@ -16,6 +17,7 @@ public class CharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         mMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -39,8 +41,11 @@ public class CharacterController : MonoBehaviour
 
     private void ColorChange(int value)
     {
-        string[] color = {"red","orange","yellow","blue","green"};
-        GetComponent<Renderer>().material.SetColor("_Color", Color.color[value]);
+        Color[] colors = {Color.red,Color.magenta,Color.yellow,Color.blue,Color.green};
+        // Color[] colors = {Color.red};
+        if (value > 0){
+            GetComponent<Renderer>().material.SetColor("_Color", colors[value]);
+        }
     }
     private void DetectMine()
     {
@@ -52,10 +57,15 @@ public class CharacterController : MonoBehaviour
             if (brick != null) {
                 brick.ShowSecret();
 
-                if (brick.mine && mPreviousBrick != null) {
-                    // mMeshAgent.SetDestination(mPreviousBrick.transform.position);
+                if (brick.mine && mPreviousBrick != null && stepOn) {
+                    mMeshAgent.SetDestination(mPreviousBrick.transform.position);
                     blood -= 1;
+                    stepOn = false;
                     ColorChange(blood);
+                } else 
+                if (!brick.mine)
+                {
+                    stepOn = true;
                 }
 
                 if (brick != mCurrentBrick) {
@@ -65,12 +75,12 @@ public class CharacterController : MonoBehaviour
             }
         }
     }
-    private void OnMouseEnter()
-	{
-        GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-	}
-	private void OnMouseExit()
-	{
-        GetComponent<Renderer>().material.SetColor("_Color", Color.green);
-	}
+    // private void OnMouseEnter()
+	// {
+    //     GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+	// }
+	// private void OnMouseExit()
+	// {
+    //     GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+	// }
 }
