@@ -37,6 +37,11 @@ public class CharacterController : MonoBehaviour
         DetectMine();
     }
 
+    private void ColorChange(int value)
+    {
+        string[] color = {"red","orange","yellow","blue","green"};
+        GetComponent<Renderer>().material.SetColor("_Color", color[value]);
+    }
     private void DetectMine()
     {
         Ray ray = new Ray(transform.position, -transform.up);
@@ -50,6 +55,7 @@ public class CharacterController : MonoBehaviour
                 if (brick.mine && mPreviousBrick != null) {
                     // mMeshAgent.SetDestination(mPreviousBrick.transform.position);
                     blood -= 1;
+                    ColorChange(blood);
                 }
 
                 if (brick != mCurrentBrick) {
