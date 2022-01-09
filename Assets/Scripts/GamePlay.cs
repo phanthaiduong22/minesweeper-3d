@@ -21,9 +21,9 @@ public class GamePlay : MonoBehaviour
 	{
 		// GameObject gameClone = Instantiate(cube);
 		// cam = Camera.main;
-		rows = 9;
-		cols = 9;
-		heights = 9;
+		rows = 5;
+		cols = 5;
+		heights = 5;
 		randomProportion = 10;
 		CreateCubes(rows, cols, heights);
 

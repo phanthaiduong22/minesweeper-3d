@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// There are four state of cube:
+// isClick = -1: Showed cube ->  not clickable
+// isClick = 0: Hasn't showed cube -> clickable to showed
+// isClick = 1: Cube is showing (run ActivateNearbyBombs func)
+// isClick = 2: Cube is flaged -> not clickable, need to remove flag to return isClick = 0;
+
 public class Cube : MonoBehaviour
 {
 	private Renderer renderer;
@@ -27,7 +33,7 @@ public class Cube : MonoBehaviour
 	{
 		renderer = GetComponent<Renderer>();
 		// transform.Rotate(new Vector3(0f, 100f, 0f) * Time.deltaTime);
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0)) // Right mouse click
 		{
 			RaycastHit hit;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -40,35 +46,74 @@ public class Cube : MonoBehaviour
 				}
 			}
 		}
+		if (Input.GetMouseButtonDown(1)) // Left mouse click
+		{
+			RaycastHit hit;
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+			if (Physics.Raycast(ray, out hit, 100.0f))
+			{
+				if (hit.transform != null)
+				{
+					FlagCube(hit.transform.gameObject);
+				}
+			}
+		}
 	}
 	private void ClickCube(GameObject gameObject)
 	{
 		Cube cube = gameObject.GetComponent<Cube>();
-
-		if (cube.isBomb == 1)
+		if (cube.isClicked == 0)
 		{
-			// GameOver
-			print("Game Over!!! Haha");
-		}
-		else
-		{
-			// Open nearby boxes;
-			cube.isClicked = 1;
-		}
-	}
-	private void OnMouseEnter()
-	{
-		if (isClicked == 0)
-		{
-			if (isBomb == 1)
+			if (cube.isBomb == 1)
 			{
-				renderer.material.color = Color.red;
+				// GameOver
+				print("Game Over!!! Haha");
+				cube.isClicked = 1;
+
 			}
 			else
 			{
-				renderer.material.color = Color.green;
+				// Open nearby boxes;
+				cube.isClicked = 1;
 			}
 		}
+
+	}
+
+	private void FlagCube(GameObject gameObject)
+	{
+		Cube cube = gameObject.GetComponent<Cube>();
+		if (cube.isClicked == 0)
+		{
+			cube.isClicked = 2;
+		}
+		else if (cube.isClicked == 2)
+		{
+			cube.isClicked = 0;
+		}
+
+
+	}
+	private void OnMouseEnter()
+	{
+		// if (isClicked == 0)
+		// {
+		// 	if (isBomb == 1)
+		// 	{
+		// 		renderer.material.color = Color.red;
+		// 	}
+		// 	else
+		// 	{
+		// 		renderer.material.color = Color.green;
+		// 	}
+		// }
+
+		// Print Logs
+		PrintState();
+		// Hover animation
+		if (isClicked == 0)
+			renderer.material.color = Color.grey;
 
 	}
 	private void OnMouseExit()
@@ -76,6 +121,10 @@ public class Cube : MonoBehaviour
 		if (isClicked == 0)
 		{
 			renderer.material.color = Color.white;
+		}
+		else if (isClicked == 2)
+		{
+			renderer.material.color = Color.yellow;
 		}
 	}
 	public void DisplayBox(int cntBombs)
