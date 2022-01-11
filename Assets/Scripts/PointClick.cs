@@ -9,12 +9,12 @@ public class PointClick : MonoBehaviour, IMouse
     public float sensitivity = .5f;
 
     Vector3 angles;
-    Vector3 position;
     Mouse mouse;
 
     PlayerInput playerInput;
     InputAction drag;
-
+    Transform center;
+    Transform cam;
 
     IMouse currentDragger;
 
@@ -32,10 +32,14 @@ public class PointClick : MonoBehaviour, IMouse
         leftClick.started += OnLeftClickStarted;
         leftClick.canceled += OnLeftClickCanceled;
 
+        InputAction scroll = map.FindAction("Scroll", true);
+        scroll.started += OnMouseScroll;
+
         drag = map.FindAction("Drag", true);
 
         angles = transform.localEulerAngles;
-        position = transform.localPosition;
+        center = transform.Find("Center");
+        cam = center.Find("Camera");
         mouse = Mouse.current;
     }
 
@@ -105,7 +109,7 @@ public class PointClick : MonoBehaviour, IMouse
         angles.x += delta.y;
         angles.y += delta.x;
 
-        Transform center = transform.Find("Center");
+        center = transform.Find("Center");
         center.localEulerAngles = angles;
     }
 
@@ -132,11 +136,26 @@ public class PointClick : MonoBehaviour, IMouse
     public void OnLeftMouseDrag(InputAction.CallbackContext context)
     {
         Vector2 delta = sensitivity * context.ReadValue<Vector2>();
-        Transform center = transform.Find("Center");
-        Transform cam = center.Find("Camera");
         Vector3 pos = cam.localPosition;
         pos.x -= delta.x;
         pos.y -= delta.y;
         cam.localPosition = pos;
+    }
+
+    public void OnMouseScroll(InputAction.CallbackContext context)
+    {
+        float delta = context.ReadValue<float>();
+        if (delta > 0)
+        {
+            delta = -1f;
+        }
+        else if (delta < 0)
+        {
+            delta = 1f;
+        }
+        Camera camera = cam.GetComponent<Camera>();
+        float fov = camera.fieldOfView;
+        float target = Mathf.Clamp(fov + delta * 10f, 30f, 90f);
+        camera.fieldOfView = Mathf.Lerp(fov, target, 10f*Time.deltaTime);
     }
 }
