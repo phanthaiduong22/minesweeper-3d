@@ -9,6 +9,7 @@ public class PointClick : MonoBehaviour, IMouse
     public float sensitivity = .5f;
 
     Vector3 angles;
+    Vector3 position;
     Mouse mouse;
 
     PlayerInput playerInput;
@@ -34,7 +35,7 @@ public class PointClick : MonoBehaviour, IMouse
         drag = map.FindAction("Drag", true);
 
         angles = transform.localEulerAngles;
-
+        position = transform.localPosition;
         mouse = Mouse.current;
     }
 
@@ -130,6 +131,12 @@ public class PointClick : MonoBehaviour, IMouse
 
     public void OnLeftMouseDrag(InputAction.CallbackContext context)
     {
-        
+        Vector2 delta = sensitivity * context.ReadValue<Vector2>();
+        Transform center = transform.Find("Center");
+        Transform cam = center.Find("Camera");
+        Vector3 pos = cam.localPosition;
+        pos.x -= delta.x;
+        pos.y -= delta.y;
+        cam.localPosition = pos;
     }
 }
