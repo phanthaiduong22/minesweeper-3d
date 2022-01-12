@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // There are four state of cube:
 // isClick = -1: Showed cube ->  not clickable
@@ -8,7 +9,7 @@ using UnityEngine;
 // isClick = 1: Cube is showing (run ActivateNearbyBombs func)
 // isClick = 2: Cube is flaged -> not clickable, need to remove flag to return isClick = 0;
 
-public class Cube : MonoBehaviour
+public class Cube : MonoBehaviour, IMouse
 {
 	private Renderer renderer;
 	// public GameObject gamePlay;
@@ -27,38 +28,10 @@ public class Cube : MonoBehaviour
 	}
 	// public GamePlay GamePlay;
 
-
-	// Update is called once per frame
 	void Update()
 	{
 		renderer = GetComponent<Renderer>();
 		// transform.Rotate(new Vector3(0f, 100f, 0f) * Time.deltaTime);
-		if (Input.GetMouseButtonDown(0)) // Right mouse click
-		{
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-			if (Physics.Raycast(ray, out hit, 100.0f))
-			{
-				if (hit.transform != null)
-				{
-					ClickCube(hit.transform.gameObject);
-				}
-			}
-		}
-		if (Input.GetMouseButtonDown(1)) // Left mouse click
-		{
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-			if (Physics.Raycast(ray, out hit, 100.0f))
-			{
-				if (hit.transform != null)
-				{
-					FlagCube(hit.transform.gameObject);
-				}
-			}
-		}
 	}
 	private void ClickCube(GameObject gameObject)
 	{
@@ -95,7 +68,7 @@ public class Cube : MonoBehaviour
 
 
 	}
-	private void OnMouseEnter()
+    private void OnMouseEnter()
 	{
 		// if (isClicked == 0)
 		// {
@@ -116,18 +89,19 @@ public class Cube : MonoBehaviour
 			renderer.material.color = Color.grey;
 
 	}
-	private void OnMouseExit()
-	{
-		if (isClicked == 0)
-		{
-			renderer.material.color = Color.white;
-		}
-		else if (isClicked == 2)
-		{
-			renderer.material.color = Color.yellow;
-		}
-	}
-	public void DisplayBox(int cntBombs)
+
+    private void OnMouseExit()
+    {
+        if (isClicked == 0)
+        {
+            renderer.material.color = Color.white;
+        }
+        else if (isClicked == 2)
+        {
+            renderer.material.color = Color.yellow;
+        }
+    }
+    public void DisplayBox(int cntBombs)
 	{
 		if (isBomb == 1)
 		{
@@ -152,4 +126,52 @@ public class Cube : MonoBehaviour
 	{
 		Destroy(gameObject);
 	}
+
+    public void OnRightMouseDown(InputAction.CallbackContext context)
+    {
+		RaycastHit hit;
+		Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+		if (Physics.Raycast(ray, out hit, 100.0f))
+		{
+			if (hit.transform != null)
+			{
+				FlagCube(hit.transform.gameObject);
+			}
+		}
+	}
+
+    public void OnRightMouseDrag(InputAction.CallbackContext context)
+    {
+        
+    }
+
+    public void OnRightMouseUp(InputAction.CallbackContext context)
+    {
+		
+	}
+
+    public void OnLeftMouseUp(InputAction.CallbackContext context)
+    {
+		
+	}
+
+    public void OnLeftMouseDown(InputAction.CallbackContext context)
+    {
+		RaycastHit hit;
+		Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+		if (Physics.Raycast(ray, out hit, 100.0f))
+		{
+			if (hit.transform != null)
+			{
+				ClickCube(hit.transform.gameObject);
+			}
+		}
+	}
+
+    public void OnLeftMouseDrag(InputAction.CallbackContext context)
+    {
+        
+    }
 }
