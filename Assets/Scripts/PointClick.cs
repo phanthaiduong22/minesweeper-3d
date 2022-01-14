@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PointClick : MonoBehaviour, IMouse
 {
-	public float sensitivity = .01f;
+	public float sensitivity = .1f;
+	public Transform eventSystem;
 
 	Vector3 angles;
 	Mouse mouse;
@@ -15,6 +17,7 @@ public class PointClick : MonoBehaviour, IMouse
 	InputAction drag;
 	Transform center;
 	Transform cam;
+	EventSystem esystem;
 
 	IMouse currentDragger;
 
@@ -41,6 +44,7 @@ public class PointClick : MonoBehaviour, IMouse
 		center = transform.Find("Center");
 		cam = center.Find("Camera");
 		mouse = Mouse.current;
+		esystem = eventSystem.GetComponent<EventSystem>();
 	}
 
 	public void OnLeftClickStarted(InputAction.CallbackContext context)
@@ -62,6 +66,7 @@ public class PointClick : MonoBehaviour, IMouse
 			}
 		}
 		currentDragger.OnLeftMouseDown(context);
+		esystem.enabled = false;
 		drag.performed += currentDragger.OnLeftMouseDrag;
 		// }
 	}
@@ -69,6 +74,7 @@ public class PointClick : MonoBehaviour, IMouse
 	public void OnLeftClickCanceled(InputAction.CallbackContext context)
 	{
 		drag.performed -= currentDragger.OnLeftMouseDrag;
+		esystem.enabled = true;
 		currentDragger.OnLeftMouseUp(context);
 	}
 
@@ -92,6 +98,7 @@ public class PointClick : MonoBehaviour, IMouse
 		}
 
 		currentDragger.OnRightMouseDown(context);
+		esystem.enabled = false;
 		drag.performed += currentDragger.OnRightMouseDrag;
 		// }
 	}
@@ -99,6 +106,7 @@ public class PointClick : MonoBehaviour, IMouse
 	public void OnRightClickCanceled(InputAction.CallbackContext context)
 	{
 		drag.performed -= currentDragger.OnRightMouseDrag;
+		esystem.enabled = true;
 		currentDragger.OnRightMouseUp(context);
 	}
 
@@ -137,8 +145,10 @@ public class PointClick : MonoBehaviour, IMouse
 	{
 		Vector2 delta = sensitivity * context.ReadValue<Vector2>();
 		Vector3 pos = cam.localPosition;
-		pos.x -= delta.x;
-		pos.y -= delta.y;
+		pos.x = Mathf.Clamp(pos.x - delta.x, -10f, 10f);
+		pos.y = Mathf.Clamp(pos.y - delta.y, -10f, 10f);
+		//pos.x -= delta.x;
+		//pos.y -= delta.y;
 		cam.localPosition = pos;
 	}
 
