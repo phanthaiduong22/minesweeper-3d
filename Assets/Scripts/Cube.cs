@@ -30,7 +30,6 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 		renderer = GetComponent<Renderer>();
 		color = renderer.material.color;
 	}
-	// public GamePlay GamePlay;
 
 	void Update()
 	{
@@ -45,8 +44,9 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 			if (cube.isBomb == 1)
 			{
 				// GameOver
+				cube.DisplayBomb();
 				print("Game Over!!! Haha");
-				cube.isClicked = 1;
+				cube.isClicked = 3;
 
 			}
 			else
@@ -58,43 +58,36 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 
 	}
 
+	private void DisplayBomb()
+    {
+		Transform mine = transform.Find("mine");
+		SpriteRenderer mineRenderer = mine.GetComponent<SpriteRenderer>();
+		mineRenderer.enabled = true;
+		MeshRenderer mRenderer = GetComponent<MeshRenderer>();
+		mRenderer.enabled = false;
+		mine.transform.LookAt(Camera.main.transform.position);
+		mine.transform.rotation = (Camera.main.transform.rotation);
+	}
+
 	private void FlagCube(GameObject gameObject)
 	{
 		Cube cube = gameObject.GetComponent<Cube>();
 		if (cube.isClicked == 0)
 		{
 			cube.isClicked = 2;
+			cube.FlagColor(true);
 		}
 		else if (cube.isClicked == 2)
 		{
 			cube.isClicked = 0;
+			cube.FlagColor(false);
 		}
 
 
 	}
 
-	// public void DisplayBox(int cntBombs)
-	// {
-	// 	if (isClicked == 0)
-	// 	{
-	// 		renderer.material.color = Color.white;
-	// 	}
-	// 	else if (isClicked == 2)
-	// 	{
-	// 		renderer.material.color = Color.yellow;
-	// 	}
-	// }
 	public void DisplayBox(int cntBombs)
 	{
-		if (isBomb == 1)
-		{
-			renderer.material.color = Color.red;
-		}
-		else
-		{
-			renderer.material.color = Color.green;
-		}
-		// meshRender.enabled = false;
 		transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 		cubeText.MeshRenderEnable();
 		cubeText.ChangeTextMesh(cntBombs);
@@ -160,11 +153,25 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		renderer.material.color = new Color(color.r, color.g, color.b, color.a / 2);
+		if (isClicked == 0)
+			renderer.material.color = new Color(color.r, color.g, color.b, color.a / 2);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		renderer.material.color = color;
+		if (isClicked == 0)
+			renderer.material.color = color;
 	}
+
+	public void FlagColor(bool flag)
+    {
+		if (flag)
+        {
+			renderer.material.color = Color.yellow;
+        }
+		else
+        {
+			renderer.material.color = color;
+        }
+    }
 }
