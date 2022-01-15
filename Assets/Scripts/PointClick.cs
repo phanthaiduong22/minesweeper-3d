@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PointClick : MonoBehaviour, IMouse
 {
-	public float sensitivity = .1f;
+	public float sensitivity = .01f;
 
 	Vector3 angles;
 	Mouse mouse;
