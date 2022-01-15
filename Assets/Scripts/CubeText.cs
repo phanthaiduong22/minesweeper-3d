@@ -8,21 +8,23 @@ public class CubeText : MonoBehaviour
 	public MeshRenderer meshRender;
 	public TextMesh textMesh;
 	public Camera cameraToFollow;
-	// public float DistanceFromCamera;
+	public float DistanceFromCamera;
+
+	public Transform bannerLookTarget;
 
 	void Start()
 	{
-
+		bannerLookTarget = Camera.main.transform;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		// transform.position = CameraToFollow.transform.position + CameraToFollow.transform.forward * DistanceFromCamera;
-		// transform.LookAt(Camera.main.transform);
-		/*transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
-			Camera.main.transform.rotation * Vector3.up);*/
-		this.transform.LookAt(cameraToFollow.transform);
+		Vector3 v = Camera.main.transform.position - transform.position;
+		v.x = v.z = 0.0f;
+		transform.LookAt(Camera.main.transform.position - v);
+		transform.rotation = (Camera.main.transform.rotation); // Take care about camera rotation
+
 	}
 
 	public void MeshRenderEnable()

@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 4885956293908032718}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1440, y: 628}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8280857351206147514
 MeshRenderer:
@@ -116,6 +116,8 @@ MonoBehaviour:
   meshRender: {fileID: 8280857351206147514}
   textMesh: {fileID: 842828135924119459}
   cameraToFollow: {fileID: 1181073787741358513, guid: 4afd4ebb2b9c7729e96e80131f23319b, type: 3}
+  DistanceFromCamera: 0.5
+  bannerLookTarget: {fileID: 0}
 --- !u!1 &6304538721557846466
 GameObject:
   m_ObjectHideFlags: 0
