@@ -34,7 +34,7 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 
 	void Update()
 	{
-		
+
 		// transform.Rotate(new Vector3(0f, 100f, 0f) * Time.deltaTime);
 	}
 	private void ClickCube(GameObject gameObject)
@@ -72,18 +72,18 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 
 
 	}
-   
-    public void DisplayBox(int cntBombs)
-	{
-		if (isClicked == 0)
-		{
-			renderer.material.color = Color.white;
-		}
-		else if (isClicked == 2)
-		{
-			renderer.material.color = Color.yellow;
-		}
-	}
+
+	// public void DisplayBox(int cntBombs)
+	// {
+	// 	if (isClicked == 0)
+	// 	{
+	// 		renderer.material.color = Color.white;
+	// 	}
+	// 	else if (isClicked == 2)
+	// 	{
+	// 		renderer.material.color = Color.yellow;
+	// 	}
+	// }
 	public void DisplayBox(int cntBombs)
 	{
 		if (isBomb == 1)
@@ -110,8 +110,8 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 		Destroy(gameObject);
 	}
 
-    public void OnRightMouseDown(InputAction.CallbackContext context)
-    {
+	public void OnRightMouseDown(InputAction.CallbackContext context)
+	{
 		RaycastHit hit;
 		Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
@@ -124,23 +124,23 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 		}
 	}
 
-    public void OnRightMouseDrag(InputAction.CallbackContext context)
-    {
-        
-    }
+	public void OnRightMouseDrag(InputAction.CallbackContext context)
+	{
 
-    public void OnRightMouseUp(InputAction.CallbackContext context)
-    {
-		
 	}
 
-    public void OnLeftMouseUp(InputAction.CallbackContext context)
-    {
-		
+	public void OnRightMouseUp(InputAction.CallbackContext context)
+	{
+
 	}
 
-    public void OnLeftMouseDown(InputAction.CallbackContext context)
-    {
+	public void OnLeftMouseUp(InputAction.CallbackContext context)
+	{
+
+	}
+
+	public void OnLeftMouseDown(InputAction.CallbackContext context)
+	{
 		RaycastHit hit;
 		Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
@@ -153,18 +153,18 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 		}
 	}
 
-    public void OnLeftMouseDrag(InputAction.CallbackContext context)
-    {
-        
-    }
+	public void OnLeftMouseDrag(InputAction.CallbackContext context)
+	{
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
+	}
+
+	public void OnPointerEnter(PointerEventData eventData)
+	{
 		renderer.material.color = new Color(color.r, color.g, color.b, color.a / 2);
-    }
+	}
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
+	public void OnPointerExit(PointerEventData eventData)
+	{
 		renderer.material.color = color;
 	}
 }
