@@ -7,8 +7,8 @@ public class CubeText : MonoBehaviour
 	// Start is called before the first frame update
 	public MeshRenderer meshRender;
 	public TextMesh textMesh;
-	public Camera CameraToFollow;
-	public float DistanceFromCamera;
+	public Camera cameraToFollow;
+	// public float DistanceFromCamera;
 
 	void Start()
 	{
@@ -20,8 +20,9 @@ public class CubeText : MonoBehaviour
 	{
 		// transform.position = CameraToFollow.transform.position + CameraToFollow.transform.forward * DistanceFromCamera;
 		// transform.LookAt(Camera.main.transform);
-		// transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
-		// 	Camera.main.transform.rotation * Vector3.up);
+		/*transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
+			Camera.main.transform.rotation * Vector3.up);*/
+		this.transform.LookAt(cameraToFollow.transform);
 	}
 
 	public void MeshRenderEnable()
