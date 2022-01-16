@@ -323,6 +323,7 @@ MonoBehaviour:
   isClicked: 0
   meshRender: {fileID: 6304538721557846471}
   cubeText: {fileID: 5251075225569811973}
+  gameOverScreen: {fileID: 7756750916088643160, guid: 331abbc6d8707f4a4b62f71b361f6ce2, type: 3}
 --- !u!222 &7903923076600705644
 CanvasRenderer:
   m_ObjectHideFlags: 0

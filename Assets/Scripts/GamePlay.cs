@@ -7,6 +7,8 @@ public class GamePlay : MonoBehaviour
 {
 	public GameObject cubeOriginal;
 
+
+	public GameOverScreen gameOverScreen;
 	// private Camera cam;
 	// Start is called before the first frame update
 	public int rows;
@@ -60,6 +62,7 @@ public class GamePlay : MonoBehaviour
 				{
 					// Activate nearby cubes
 					ActivateNearbyCubes(i, j, k);
+
 				}
 			}
 		}
@@ -78,20 +81,30 @@ public class GamePlay : MonoBehaviour
 		if (cubesArray[x, y, z].isClicked == 1)
 		{
 			cubesArray[x, y, z].isClicked = -1;
-			// Solution 0: Destroy Cube (deprecated)
-			// cubesArray[x, y, z].DestroyCube();
 
-			// Solution 1: scale down the Cube and scale up the Text
-			int cntBombs = CountNearbyBombs(x, y, z);
-			// print(cntBombs);
-			cubesArray[x, y, z].DisplayBox(cntBombs);
-			for (int i = 0; i < 27; i++)
+			if (cubesArray[x, y, z].isBomb == 1)
 			{
-				int x1 = x + dx[i], y1 = y + dy[i], z1 = z + dz[i];
-				if (isValid(x1, y1, z1) && (dx[i] != 0 || dy[i] != 0 || dz[i] != 0) && cubesArray[x1, y1, z1].isClicked == 0 && cubesArray[x1, y1, z1].isBomb == 0 && CountNearbyBombs(x1, y1, z1) == 0)
+				FindObjectOfType<AudioManager>().Play("Lose");
+				gameOverScreen.SetUp();
+			}
+			else
+			{
+				// Solution 0: Destroy Cube (deprecated)
+				// cubesArray[x, y, z].DestroyCube();
+
+				// Solution 1: scale down the Cube and scale up the Text
+				int cntBombs = CountNearbyBombs(x, y, z);
+				// print(cntBombs);
+				cubesArray[x, y, z].DisplayBox(cntBombs);
+				FindObjectOfType<AudioManager>().Play("Tick");
+				for (int i = 0; i < 27; i++)
 				{
-					cubesArray[x1, y1, z1].isClicked = 1;
-					ActivateNearbyCubes(x1, y1, z1);
+					int x1 = x + dx[i], y1 = y + dy[i], z1 = z + dz[i];
+					if (isValid(x1, y1, z1) && (dx[i] != 0 || dy[i] != 0 || dz[i] != 0) && cubesArray[x1, y1, z1].isClicked == 0 && cubesArray[x1, y1, z1].isBomb == 0 && CountNearbyBombs(x1, y1, z1) == 0)
+					{
+						cubesArray[x1, y1, z1].isClicked = 1;
+						ActivateNearbyCubes(x1, y1, z1);
+					}
 				}
 			}
 		}
