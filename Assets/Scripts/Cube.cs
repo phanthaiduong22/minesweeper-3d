@@ -21,6 +21,7 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	public int isClicked;
 	public MeshRenderer meshRender;
 	public CubeText cubeText;
+	// public GameOverScreen gameOverScreen;
 
 	Color color;
 	void Start()
@@ -47,6 +48,8 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 				// GameOver
 				print("Game Over!!! Haha");
 				cube.isClicked = 1;
+
+				// gameOverScreen.SetUp();
 
 			}
 			else
