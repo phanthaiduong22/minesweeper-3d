@@ -19,41 +19,38 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	public int y;
 	public int z;
 	public int isClicked;
-	public MeshRenderer meshRender;
+	//public MeshRenderer meshRender;
 	public CubeText cubeText;
+	public Transform gamePlay;
 
 	Color color;
+	int nBombs;
+	static bool firstClick;
 	void Start()
 	{
 		// this.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.1f);
 		// gameObject.GetComponent<Renderer>().material.color.a = 0;
 		renderer = GetComponent<Renderer>();
 		color = renderer.material.color;
+		firstClick = false;
 	}
 
-	void Update()
-	{
-
-		// transform.Rotate(new Vector3(0f, 100f, 0f) * Time.deltaTime);
-	}
 	private void ClickCube(GameObject gameObject)
 	{
 		Cube cube = gameObject.GetComponent<Cube>();
 		if (cube.isClicked == 0)
 		{
-			if (cube.isBomb == 1)
-			{
-				// GameOver
-				cube.isClicked = 3;
-
-			}
-			else
-			{
-				// Open nearby boxes;
-				cube.isClicked = 1;
-			}
+			cube.isClicked = 1;
 		}
 
+	}
+
+	public void Display()
+    {
+		transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+		cubeText.MeshRenderEnable();
+		cubeText.ChangeTextMesh(nBombs);
+		isClicked = -1;
 	}
 
 	public void DisplayBomb()
@@ -65,6 +62,7 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 		mRenderer.enabled = false;
 		mine.transform.LookAt(Camera.main.transform.position);
 		mine.transform.rotation = (Camera.main.transform.rotation);
+		isClicked = -1;
 	}
 
 	private void FlagCube(GameObject gameObject)
@@ -103,6 +101,8 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 
 	public void OnRightMouseDown(InputAction.CallbackContext context)
 	{
+		if (!firstClick)
+			return;
 		RaycastHit hit;
 		Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
@@ -132,9 +132,9 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 
 	public void OnLeftMouseDown(InputAction.CallbackContext context)
 	{
+		firstClick = true;
 		RaycastHit hit;
 		Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
 		if (Physics.Raycast(ray, out hit, 100.0f))
 		{
 			if (hit.transform != null)
@@ -171,5 +171,20 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
         {
 			renderer.material.color = color;
         }
+    }
+
+	public void SetBombs(int n)
+    {
+		nBombs = n;
+    }
+
+	public int GetBombs()
+    {
+		return nBombs;
+    }
+
+	public void FirstClick()
+    {
+		firstClick = true;
     }
 }
