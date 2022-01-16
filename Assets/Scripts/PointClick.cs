@@ -66,7 +66,8 @@ public class PointClick : MonoBehaviour, IMouse
 			}
 		}
 		currentDragger.OnLeftMouseDown(context);
-		esystem.enabled = false;
+		if (esystem)
+			esystem.enabled = false;
 		drag.performed += currentDragger.OnLeftMouseDrag;
 		// }
 	}
@@ -74,7 +75,8 @@ public class PointClick : MonoBehaviour, IMouse
 	public void OnLeftClickCanceled(InputAction.CallbackContext context)
 	{
 		drag.performed -= currentDragger.OnLeftMouseDrag;
-		esystem.enabled = true;
+		if (esystem)
+			esystem.enabled = true;
 		currentDragger.OnLeftMouseUp(context);
 	}
 
@@ -98,7 +100,8 @@ public class PointClick : MonoBehaviour, IMouse
 		}
 
 		currentDragger.OnRightMouseDown(context);
-		esystem.enabled = false;
+		if (esystem)
+			esystem.enabled = false;
 		drag.performed += currentDragger.OnRightMouseDrag;
 		// }
 	}
@@ -106,7 +109,8 @@ public class PointClick : MonoBehaviour, IMouse
 	public void OnRightClickCanceled(InputAction.CallbackContext context)
 	{
 		drag.performed -= currentDragger.OnRightMouseDrag;
-		esystem.enabled = true;
+		if (esystem)
+			esystem.enabled = true;
 		currentDragger.OnRightMouseUp(context);
 	}
 
@@ -117,8 +121,11 @@ public class PointClick : MonoBehaviour, IMouse
 		angles.x += delta.y;
 		angles.y += delta.x;
 
-		center = transform.Find("Center");
-		center.localEulerAngles = angles;
+		if (this)
+		{
+			center = transform.Find("Center");
+			center.localEulerAngles = angles;
+		}
 	}
 
 	public void OnRightMouseDown(InputAction.CallbackContext context)
@@ -143,29 +150,37 @@ public class PointClick : MonoBehaviour, IMouse
 
 	public void OnLeftMouseDrag(InputAction.CallbackContext context)
 	{
-		Vector2 delta = sensitivity * context.ReadValue<Vector2>();
-		Vector3 pos = cam.localPosition;
-		pos.x = Mathf.Clamp(pos.x - delta.x, -10f, 10f);
-		pos.y = Mathf.Clamp(pos.y - delta.y, -10f, 10f);
-		//pos.x -= delta.x;
-		//pos.y -= delta.y;
-		cam.localPosition = pos;
+		if (this)
+		{
+			Vector2 delta = sensitivity * context.ReadValue<Vector2>();
+			Vector3 pos = cam.localPosition;
+			pos.x = Mathf.Clamp(pos.x - delta.x, -10f, 10f);
+			pos.y = Mathf.Clamp(pos.y - delta.y, -10f, 10f);
+			//pos.x -= delta.x;
+			//pos.y -= delta.y;
+			cam.localPosition = pos;
+		}
+
 	}
 
 	public void OnMouseScroll(InputAction.CallbackContext context)
 	{
-		float delta = context.ReadValue<float>();
-		if (delta > 0)
+		if (this)
 		{
-			delta = -1f;
+			float delta = context.ReadValue<float>();
+			if (delta > 0)
+			{
+				delta = -1f;
+			}
+			else if (delta < 0)
+			{
+				delta = 1f;
+			}
+			Camera camera = cam.GetComponent<Camera>();
+			float fov = camera.fieldOfView;
+			float target = Mathf.Clamp(fov + delta * 10f, 30f, 90f);
+			camera.fieldOfView = Mathf.Lerp(fov, target, 10f * Time.deltaTime);
 		}
-		else if (delta < 0)
-		{
-			delta = 1f;
-		}
-		Camera camera = cam.GetComponent<Camera>();
-		float fov = camera.fieldOfView;
-		float target = Mathf.Clamp(fov + delta * 10f, 30f, 90f);
-		camera.fieldOfView = Mathf.Lerp(fov, target, 10f * Time.deltaTime);
+
 	}
 }
