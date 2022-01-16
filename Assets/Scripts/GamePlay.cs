@@ -84,6 +84,7 @@ public class GamePlay : MonoBehaviour
 
 			if (cubesArray[x, y, z].isBomb == 1)
 			{
+				FindObjectOfType<AudioManager>().Play("Lose");
 				gameOverScreen.SetUp();
 			}
 			else
@@ -95,6 +96,7 @@ public class GamePlay : MonoBehaviour
 				int cntBombs = CountNearbyBombs(x, y, z);
 				// print(cntBombs);
 				cubesArray[x, y, z].DisplayBox(cntBombs);
+				FindObjectOfType<AudioManager>().Play("Tick");
 				for (int i = 0; i < 27; i++)
 				{
 					int x1 = x + dx[i], y1 = y + dy[i], z1 = z + dz[i];
