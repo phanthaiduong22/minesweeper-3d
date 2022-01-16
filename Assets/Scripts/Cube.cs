@@ -62,7 +62,7 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	}
 
 	private void DisplayBomb()
-    {
+	{
 		Transform mine = transform.Find("mine");
 		SpriteRenderer mineRenderer = mine.GetComponent<SpriteRenderer>();
 		mineRenderer.enabled = true;
@@ -167,14 +167,14 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	}
 
 	public void FlagColor(bool flag)
-    {
+	{
 		if (flag)
-        {
+		{
 			renderer.material.color = Color.yellow;
-        }
+		}
 		else
-        {
+		{
 			renderer.material.color = color;
-        }
-    }
+		}
+	}
 }

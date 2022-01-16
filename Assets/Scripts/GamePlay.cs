@@ -78,14 +78,20 @@ public class GamePlay : MonoBehaviour
 	}
 	void ActivateNearbyCubes(int x, int y, int z)
 	{
+
+		if (cubesArray[x, y, z].isClicked == 3)
+		{
+			print("gameover from gameplay");
+			FindObjectOfType<AudioManager>().Play("Lose");
+			cubesArray[x, y, z].isClicked = -1;
+			gameOverScreen.SetUp();
+		}
 		if (cubesArray[x, y, z].isClicked == 1)
 		{
 			cubesArray[x, y, z].isClicked = -1;
-
-			if (cubesArray[x, y, z].isBomb == 1)
+			if (cubesArray[x, y, z].isClicked == 1)
 			{
-				FindObjectOfType<AudioManager>().Play("Lose");
-				gameOverScreen.SetUp();
+
 			}
 			else
 			{
