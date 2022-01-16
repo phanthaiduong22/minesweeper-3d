@@ -44,8 +44,6 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 			if (cube.isBomb == 1)
 			{
 				// GameOver
-				cube.DisplayBomb();
-				print("Game Over!!! Haha");
 				cube.isClicked = 3;
 
 			}
@@ -58,7 +56,7 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 
 	}
 
-	private void DisplayBomb()
+	public void DisplayBomb()
     {
 		Transform mine = transform.Find("mine");
 		SpriteRenderer mineRenderer = mine.GetComponent<SpriteRenderer>();

@@ -68,6 +68,24 @@ public class GamePlay : MonoBehaviour
 		}
 	}
 
+	void ActivateAllBombs()
+    {
+		for (int i = 0; i < rows; ++i)
+		{
+			for (int j = 0; j < cols; ++j)
+			{
+				for (int k = 0; k < heights; ++k)
+				{
+					if (cubesArray[i, j, k].isBomb == 1)
+                    {
+						cubesArray[i, j, k].DisplayBomb();
+                    }
+
+				}
+			}
+		}
+	}
+
 	bool isValid(int x, int y, int z)
 	{
 		if (x >= 0 && x < rows && y >= 0 && y < cols && z >= 0 && z < heights)
@@ -82,6 +100,7 @@ public class GamePlay : MonoBehaviour
 		if (cubesArray[x, y, z].isClicked == 3)
 		{
 			print("gameover from gameplay");
+			ActivateAllBombs();
 			FindObjectOfType<AudioManager>().Play("Lose");
 			cubesArray[x, y, z].isClicked = -1;
 			gameOverScreen.SetUp();
