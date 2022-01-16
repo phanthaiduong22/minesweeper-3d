@@ -24,6 +24,8 @@ public class GameOverScreen : MonoBehaviour
 
 	public void RestartButton()
 	{
+		print("clicking restart button");	
+		gameObject.SetActive(false);
 		SceneManager.LoadScene(1);
 	}
 
