@@ -47,6 +47,22 @@ public class PointClick : MonoBehaviour, IMouse
 		esystem = eventSystem.GetComponent<EventSystem>();
 	}
 
+	void OnDisable()
+    {
+		InputActionMap map = playerInput.currentActionMap;
+
+		InputAction rightClick = map.FindAction("RightClick", true);
+		rightClick.started -= OnRightClickStarted;
+		rightClick.canceled -= OnRightClickCanceled;
+
+		InputAction leftClick = map.FindAction("LeftClick", true);
+		leftClick.started -= OnLeftClickStarted;
+		leftClick.canceled -= OnLeftClickCanceled;
+
+		InputAction scroll = map.FindAction("Scroll", true);
+		scroll.started -= OnMouseScroll;
+	}
+
 	public void OnLeftClickStarted(InputAction.CallbackContext context)
 	{
 		RaycastHit hit;
@@ -155,7 +171,7 @@ public class PointClick : MonoBehaviour, IMouse
 			Vector2 delta = sensitivity * context.ReadValue<Vector2>();
 			Vector3 pos = cam.localPosition;
 			pos.x = Mathf.Clamp(pos.x - delta.x, -10f, 10f);
-			pos.y = Mathf.Clamp(pos.y - delta.y, -10f, 10f);
+			pos.y = Mathf.Clamp(pos.y - delta.y, -8f, 8f);
 			//pos.x -= delta.x;
 			//pos.y -= delta.y;
 			cam.localPosition = pos;

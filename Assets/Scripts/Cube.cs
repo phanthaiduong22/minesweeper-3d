@@ -21,7 +21,6 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	public int isClicked;
 	public MeshRenderer meshRender;
 	public CubeText cubeText;
-	// public GameOverScreen gameOverScreen;
 
 	Color color;
 	void Start()
@@ -49,8 +48,6 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 				print("Game Over!!! Haha");
 				cube.isClicked = 3;
 
-				// gameOverScreen.SetUp();
-
 			}
 			else
 			{
@@ -62,7 +59,7 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	}
 
 	private void DisplayBomb()
-	{
+    {
 		Transform mine = transform.Find("mine");
 		SpriteRenderer mineRenderer = mine.GetComponent<SpriteRenderer>();
 		mineRenderer.enabled = true;
@@ -167,14 +164,14 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	}
 
 	public void FlagColor(bool flag)
-	{
+    {
 		if (flag)
-		{
+        {
 			renderer.material.color = Color.yellow;
-		}
+        }
 		else
-		{
+        {
 			renderer.material.color = color;
-		}
-	}
+        }
+    }
 }
