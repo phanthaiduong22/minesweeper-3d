@@ -24,13 +24,11 @@ public class GamePlay : MonoBehaviour
 	Cube[,,] cubesArray = new Cube[50, 50, 50];
 
 	bool firstClick;
-	public int newGame = 1;
 	Text bombCounter;
 	int nFlags;
 	void Start()
 	{
 		firstClick = false;
-		newGame = 1;
 		// GameObject gameClone = Instantiate(cube);
 		// cam = Camera.main;
 		switch (GameValues.Difficulty)
@@ -66,16 +64,15 @@ public class GamePlay : MonoBehaviour
 	void Update()
 	{
 		CheckClicked();
-		newGame = 1;
 		if (Cube.GetFlags() != nFlags)
 		{
 			nFlags = Cube.GetFlags();
 		}
 		bombCounter.text = (nBombs - nFlags).ToString();
-		if (nFlags == Cube.GetCorrect() && nFlags == nBombs)
+		if (nFlags == Cube.GetCorrect() && nFlags == nBombs && firstClick)
 		{
 			gameOverScreen.SetUp("YOU WIN!!!");
-			newGame = 0;
+			nFlags = int.MinValue;
 		}
 	}
 

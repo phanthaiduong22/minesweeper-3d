@@ -31,8 +31,6 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 
 	void Start()
 	{
-		// this.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.1f);
-		// gameObject.GetComponent<Renderer>().material.color.a = 0;
 		nFlags = 0;
 		nCorrect = 0;
 		renderer = GetComponent<Renderer>();
