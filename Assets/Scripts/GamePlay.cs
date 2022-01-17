@@ -72,7 +72,6 @@ public class GamePlay : MonoBehaviour
 		if (nFlags == Cube.GetCorrect() && nFlags == nBombs && firstClick)
 		{
 			gameOverScreen.SetUp("YOU WIN!!!");
-			nFlags = int.MinValue;
 		}
 	}
 
