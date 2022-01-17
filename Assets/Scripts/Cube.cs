@@ -13,13 +13,12 @@ using UnityEngine.EventSystems;
 public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHandler
 {
 	private new Renderer renderer;
-	// public GameObject gamePlay;
+
 	public int isBomb;
 	public int x;
 	public int y;
 	public int z;
 	public int isClicked;
-	//public MeshRenderer meshRender;
 	public CubeText cubeText;
 	public Transform gamePlay;
 
@@ -89,23 +88,6 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 		}
 
 
-	}
-
-	public void DisplayBox(int cntBombs)
-	{
-		transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-		cubeText.MeshRenderEnable();
-		cubeText.ChangeTextMesh(cntBombs);
-	}
-
-	public void PrintState()
-	{
-		print("isBomb: " + isBomb + " | isClicked: " + isClicked + " | (x, y, z): " + "(" + x + "," + y + "," + z + ")");
-	}
-
-	public void DestroyCube()
-	{
-		Destroy(gameObject);
 	}
 
 	public void OnRightMouseDown(InputAction.CallbackContext context)
@@ -190,11 +172,6 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	public int GetBombs()
 	{
 		return nBombs;
-	}
-
-	public void FirstClick()
-	{
-		firstClick = true;
 	}
 
 	public static int GetFlags()

@@ -7,52 +7,45 @@ using System.Linq;
 public class GamePlay : MonoBehaviour
 {
 	public GameObject cubeOriginal;
-
-
 	public GameOverScreen gameOverScreen;
 	public Transform BombCounter;
-	// private Camera cam;
-	// Start is called before the first frame update
-	public int rows;
-	public int cols;
-	public int heights;
-	public int nBombs;
-	public int randomProportion; // >= 2; Smaller number will be harder;
-	public int[] dx = { -1, -1, -1, 0, 0, 0, 1, 1, 1, -1, -1, -1, 0, 0, 0, 1, 1, 1, -1, -1, -1, 0, 0, 0, 1, 1, 1 };
-	public int[] dy = { -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1 };
-	public int[] dz = { -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-	Cube[,,] cubesArray = new Cube[50, 50, 50];
 
+	int rows;
+	int cols;
+	int heights;
+	int nBombs;
+	int[] dx = { -1, -1, -1, 0, 0, 0, 1, 1, 1, -1, -1, -1, 0, 0, 0, 1, 1, 1, -1, -1, -1, 0, 0, 0, 1, 1, 1 };
+	int[] dy = { -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1 };
+	int[] dz = { -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+	Cube[,,] cubesArray = new Cube[50, 50, 50];
 	bool firstClick;
 	Text bombCounter;
 	int nFlags;
+
 	void Start()
 	{
 		firstClick = false;
-		// GameObject gameClone = Instantiate(cube);
-		// cam = Camera.main;
 		switch (GameValues.Difficulty)
 		{
 			case GameValues.Difficulties.Easy:
 				rows = 5;
 				cols = 5;
 				heights = 5;
-				nBombs = 1;
+				nBombs = 10;
 				break;
 			case GameValues.Difficulties.Medium:
 				rows = 7;
 				cols = 7;
 				heights = 7;
-				nBombs = 15;
+				nBombs = 30;
 				break;
 			case GameValues.Difficulties.Hard:
 				rows = 10;
 				cols = 10;
 				heights = 10;
-				nBombs = 30;
+				nBombs = 90;
 				break;
 		}
-		randomProportion = 10;
 		CreateCubes(rows, cols, heights);
 		bombCounter = BombCounter.GetComponent<Text>();
 		bombCounter.text = nBombs.ToString();
@@ -60,7 +53,6 @@ public class GamePlay : MonoBehaviour
 
 	}
 
-	// Update is called once per frame
 	void Update()
 	{
 		CheckClicked();
@@ -85,8 +77,6 @@ public class GamePlay : MonoBehaviour
 			{
 				for (int k = 0; k < heights; ++k)
 				{
-					// Activate nearby cubes
-					//ActivateNearbyCubes(i, j, k);
 					if (cubesArray[i, j, k].isClicked == 1)
 					{
 						ActivateCube(new Vector3Int(i, j, k));
@@ -123,46 +113,6 @@ public class GamePlay : MonoBehaviour
 		}
 		return false;
 	}
-	void ActivateNearbyCubes(int x, int y, int z)
-	{
-
-		if (cubesArray[x, y, z].isClicked == 3)
-		{
-			// print("gameover from gameplay");
-			ActivateAllBombs();
-			FindObjectOfType<AudioManager>().Play("Lose");
-			cubesArray[x, y, z].isClicked = -1;
-			gameOverScreen.SetUp("GAME OVER");
-		}
-		if (cubesArray[x, y, z].isClicked == 1)
-		{
-			cubesArray[x, y, z].isClicked = -1;
-			if (cubesArray[x, y, z].isClicked == 1)
-			{
-
-			}
-			else
-			{
-				// Solution 0: Destroy Cube (deprecated)
-				// cubesArray[x, y, z].DestroyCube();
-
-				// Solution 1: scale down the Cube and scale up the Text
-				int cntBombs = CountNearbyBombs(x, y, z);
-				// print(cntBombs);
-				cubesArray[x, y, z].DisplayBox(cntBombs);
-				FindObjectOfType<AudioManager>().Play("Tick");
-				for (int i = 0; i < 27; i++)
-				{
-					int x1 = x + dx[i], y1 = y + dy[i], z1 = z + dz[i];
-					if (isValid(x1, y1, z1) && (dx[i] != 0 || dy[i] != 0 || dz[i] != 0) && cubesArray[x1, y1, z1].isClicked == 0 && cubesArray[x1, y1, z1].isBomb == 0 && CountNearbyBombs(x1, y1, z1) == 0)
-					{
-						cubesArray[x1, y1, z1].isClicked = 1;
-						ActivateNearbyCubes(x1, y1, z1);
-					}
-				}
-			}
-		}
-	}
 
 	int CountNearbyBombs(int x, int y, int z) // calculate itself, but itself can not be a bomb
 	{
@@ -177,6 +127,7 @@ public class GamePlay : MonoBehaviour
 		}
 		return ans;
 	}
+
 	void CreateCubes(int rows, int cols, int heights)
 	{
 		for (int i = 0; i < rows; i++)
@@ -187,26 +138,12 @@ public class GamePlay : MonoBehaviour
 				{
 					GameObject cubeClone = Instantiate(cubeOriginal, new Vector3(i, j, k), cubeOriginal.transform.rotation);
 					Cube cubeCloneComponent = cubeClone.GetComponent<Cube>();
-					//SetBomb(cubeCloneComponent);
 					cubeCloneComponent.x = i;
 					cubeCloneComponent.y = j;
 					cubeCloneComponent.z = k;
 					cubesArray[i, j, k] = cubeCloneComponent;
 				}
 			}
-		}
-	}
-
-	void SetBomb(Cube cubeCloneComponent)
-	{
-		int isBomb = Random.Range(0, randomProportion);
-		if (isBomb == 1)
-		{
-			cubeCloneComponent.isBomb = 1;
-		}
-		else
-		{
-			cubeCloneComponent.isBomb = 0;
 		}
 	}
 

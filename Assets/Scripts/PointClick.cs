@@ -66,8 +66,6 @@ public class PointClick : MonoBehaviour, IMouse
 	public void OnLeftClickStarted(InputAction.CallbackContext context)
 	{
 		RaycastHit hit;
-		// if (mouse.clickCount.ReadValue() == 1)
-		// {
 		currentDragger = this;
 
 		if (Physics.Raycast(
@@ -85,7 +83,6 @@ public class PointClick : MonoBehaviour, IMouse
 		if (esystem)
 			esystem.enabled = false;
 		drag.performed += currentDragger.OnLeftMouseDrag;
-		// }
 	}
 
 	public void OnLeftClickCanceled(InputAction.CallbackContext context)
@@ -99,8 +96,6 @@ public class PointClick : MonoBehaviour, IMouse
 	public void OnRightClickStarted(InputAction.CallbackContext context)
 	{
 		RaycastHit hit;
-		// if (mouse.clickCount.ReadValue() == 1)
-		// {
 		currentDragger = this;
 
 		if (Physics.Raycast(
@@ -119,7 +114,6 @@ public class PointClick : MonoBehaviour, IMouse
 		if (esystem)
 			esystem.enabled = false;
 		drag.performed += currentDragger.OnRightMouseDrag;
-		// }
 	}
 
 	public void OnRightClickCanceled(InputAction.CallbackContext context)
@@ -166,38 +160,28 @@ public class PointClick : MonoBehaviour, IMouse
 
 	public void OnLeftMouseDrag(InputAction.CallbackContext context)
 	{
-		if (this)
-		{
-			Vector2 delta = sensitivity * context.ReadValue<Vector2>();
-			Vector3 pos = cam.localPosition;
-			Vector2 target = new Vector2(Mathf.Clamp(pos.x - delta.x, -10f, 10f), Mathf.Clamp(pos.y - delta.y, -5f, 7f));
-			pos.x = Mathf.Lerp(cam.localPosition.x, target.x, 10f*Time.deltaTime);
-			pos.y = Mathf.Lerp(cam.localPosition.y, target.y, 10f*Time.deltaTime);
-			//pos.x -= delta.x;
-			//pos.y -= delta.y;
-			cam.localPosition = pos;
-		}
-
+		Vector2 delta = sensitivity * context.ReadValue<Vector2>();
+		Vector3 pos = cam.localPosition;
+		Vector2 target = new Vector2(Mathf.Clamp(pos.x - delta.x, -10f, 10f), Mathf.Clamp(pos.y - delta.y, -5f, 7f));
+		pos.x = Mathf.Lerp(cam.localPosition.x, target.x, 10f * Time.deltaTime);
+		pos.y = Mathf.Lerp(cam.localPosition.y, target.y, 10f * Time.deltaTime);
+		cam.localPosition = pos;
 	}
 
 	public void OnMouseScroll(InputAction.CallbackContext context)
 	{
-		if (this)
+		float delta = context.ReadValue<float>();
+		if (delta > 0)
 		{
-			float delta = context.ReadValue<float>();
-			if (delta > 0)
-			{
-				delta = -1f;
-			}
-			else if (delta < 0)
-			{
-				delta = 1f;
-			}
-			Camera camera = cam.GetComponent<Camera>();
-			float fov = camera.fieldOfView;
-			float target = Mathf.Clamp(fov + delta * 10f, 30f, 90f);
-			camera.fieldOfView = Mathf.Lerp(fov, target, 100f * Time.deltaTime);
+			delta = -1f;
 		}
-
+		else if (delta < 0)
+		{
+			delta = 1f;
+		}
+		Camera camera = cam.GetComponent<Camera>();
+		float fov = camera.fieldOfView;
+		float target = Mathf.Clamp(fov + delta * 10f, 30f, 90f);
+		camera.fieldOfView = Mathf.Lerp(fov, target, 100f * Time.deltaTime);
 	}
 }

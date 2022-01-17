@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class CubeText : MonoBehaviour
 {
-	// Start is called before the first frame update
 	public MeshRenderer meshRender;
 	public TextMesh textMesh;
 	public Camera cameraToFollow;
 	public float DistanceFromCamera;
-
 	public Transform bannerLookTarget;
 
 	void Start()
@@ -17,7 +15,6 @@ public class CubeText : MonoBehaviour
 		bannerLookTarget = Camera.main.transform;
 	}
 
-	// Update is called once per frame
 	void Update()
 	{
 		Vector3 v = Camera.main.transform.position - transform.position;
@@ -35,6 +32,7 @@ public class CubeText : MonoBehaviour
 	{
 		meshRender.enabled = false;
 	}
+
 	public void ChangeTextMesh(int cntBombs)
 	{
 		if (cntBombs >= 1)
@@ -46,8 +44,31 @@ public class CubeText : MonoBehaviour
 			textMesh.text = "";
 			MeshRenderDisable();
 		}
-		// transform.localEulerAngles = new Vector3(180, 180, 180);
-		// transform.Rotate(Vector3.up - Vector3(0, 180, 0));
 		textMesh.characterSize = 50f;
+		Color color = ChooseColor(cntBombs);
+		if (color != Color.clear)
+			textMesh.color = color;
 	}
+
+	Color ChooseColor(int number)
+    {
+		switch (number)
+        {
+			case 1:
+				return Color.red;
+			case 2:
+				return Color.blue;
+			case 3:
+				return Color.green;
+			case 4:
+				return Color.cyan;
+			case 5:
+				return Color.magenta;
+			case 6:
+				return Color.yellow;
+			default:
+				return Color.clear;
+			
+        }
+    }
 }
