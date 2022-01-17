@@ -33,18 +33,18 @@ public class GamePlay : MonoBehaviour
 				rows = 5;
 				cols = 5;
 				heights = 5;
-				nBombs = 5;
+				nBombs = 10;
 				break;
 			case GameValues.Difficulties.Medium:
+				rows = 7;
+				cols = 7;
+				heights = 7;
+				nBombs = 20;
+				break;
+			case GameValues.Difficulties.Hard:
 				rows = 10;
 				cols = 10;
 				heights = 10;
-				nBombs = 30;
-				break;
-			case GameValues.Difficulties.Hard:
-				rows = 20;
-				cols = 20;
-				heights = 20;
 				nBombs = 60;
 				break;
 		}
@@ -58,9 +58,9 @@ public class GamePlay : MonoBehaviour
 	{
 		CheckClicked();
 		if (Cube.GetFlags() == Cube.GetCorrect() && Cube.GetFlags() == nBombs)
-        {
+		{
 			print("Win");
-        }
+		}
 	}
 
 	void CheckClicked()
@@ -81,7 +81,7 @@ public class GamePlay : MonoBehaviour
 	}
 
 	void ActivateAllBombs()
-    {
+	{
 		for (int i = 0; i < rows; ++i)
 		{
 			for (int j = 0; j < cols; ++j)
@@ -89,9 +89,9 @@ public class GamePlay : MonoBehaviour
 				for (int k = 0; k < heights; ++k)
 				{
 					if (cubesArray[i, j, k].isBomb == 1)
-                    {
+					{
 						cubesArray[i, j, k].DisplayBomb();
-                    }
+					}
 
 				}
 			}
@@ -194,36 +194,36 @@ public class GamePlay : MonoBehaviour
 	}
 
 	void SetUpMatch(Vector3Int position)
-    {
+	{
 		HashSet<Vector3Int> notBombs = new HashSet<Vector3Int>();
 		notBombs.Add(position);
 		for (int i = 0; i < 27; ++i)
-        {
+		{
 			int x = position.x + dx[i];
 			int y = position.y + dy[i];
 			int z = position.z + dz[i];
 			if (isValid(x, y, z) && (dx[i] != 0 || dy[i] != 0 || dz[i] != 0))
-            {
+			{
 				notBombs.Add(new Vector3Int(x, y, z));
-            }
-        }
+			}
+		}
 		int temp = nBombs;
 		while (temp != 0)
-        {
+		{
 			int x = Random.Range(0, rows);
 			int y = Random.Range(0, cols);
 			int z = Random.Range(0, heights);
 			if (!notBombs.Contains(new Vector3Int(x, y, z)) && cubesArray[x, y, z].isBomb != 1)
-            {
+			{
 				cubesArray[x, y, z].isBomb = 1;
 				temp--;
-            }
-        }
+			}
+		}
 		CalculateAllCubes();
-    }
+	}
 
 	void CalculateAllCubes()
-    {
+	{
 		for (int i = 0; i < rows; ++i)
 		{
 			for (int j = 0; j < cols; ++j)
@@ -242,44 +242,44 @@ public class GamePlay : MonoBehaviour
 	}
 
 	void ActivateCube(Vector3Int position)
-    {
+	{
 		if (!firstClick)
-        {
+		{
 			firstClick = true;
 			SetUpMatch(position);
-        }
+		}
 		Cube cube = cubesArray[position.x, position.y, position.z];
 		if (cube.isClicked != -1 && cube.isClicked != 2)
-        {
+		{
 			if (cube.isBomb == 1)
-            {
+			{
 				ActivateAllBombs();
 				FindObjectOfType<AudioManager>().Play("Lose");
 				gameOverScreen.SetUp();
 			}
 			else
-            {
+			{
 				cube.Display();
 				FindObjectOfType<AudioManager>().Play("Tick");
 				if (cube.GetBombs() == 0)
-                {
+				{
 					ActivateAround(position);
-                }
-            }
-        }
-    }
+				}
+			}
+		}
+	}
 
 	void ActivateAround(Vector3Int pos)
-    {
+	{
 		for (int i = 0; i < 27; ++i)
-        {
+		{
 			int x = pos.x + dx[i];
 			int y = pos.y + dy[i];
 			int z = pos.z + dz[i];
 			if (isValid(x, y, z) && (dx[i] != 0 || dy[i] != 0 || dz[i] != 0))
-            {
+			{
 				ActivateCube(new Vector3Int(x, y, z));
-            }
+			}
 		}
-    }
+	}
 }
