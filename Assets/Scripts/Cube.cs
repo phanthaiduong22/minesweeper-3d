@@ -33,6 +33,8 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	{
 		// this.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.1f);
 		// gameObject.GetComponent<Renderer>().material.color.a = 0;
+		nFlags = 0;
+		nCorrect = 0;
 		renderer = GetComponent<Renderer>();
 		color = renderer.material.color;
 		firstClick = false;
@@ -49,7 +51,7 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	}
 
 	public void Display()
-    {
+	{
 		transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 		cubeText.MeshRenderEnable();
 		cubeText.ChangeTextMesh(nBombs);
@@ -57,7 +59,7 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	}
 
 	public void DisplayBomb()
-    {
+	{
 		Transform mine = transform.Find("mine");
 		SpriteRenderer mineRenderer = mine.GetComponent<SpriteRenderer>();
 		mineRenderer.enabled = true;
@@ -171,39 +173,39 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	}
 
 	public void FlagColor(bool flag)
-    {
+	{
 		if (flag)
-        {
+		{
 			renderer.material.color = Color.yellow;
-        }
+		}
 		else
-        {
+		{
 			renderer.material.color = color;
-        }
-    }
+		}
+	}
 
 	public void SetBombs(int n)
-    {
+	{
 		nBombs = n;
-    }
+	}
 
 	public int GetBombs()
-    {
+	{
 		return nBombs;
-    }
+	}
 
 	public void FirstClick()
-    {
+	{
 		firstClick = true;
-    }
+	}
 
 	public static int GetFlags()
-    {
+	{
 		return nFlags;
-    }
+	}
 
 	public static int GetCorrect()
-    {
+	{
 		return nCorrect;
-    }
+	}
 }

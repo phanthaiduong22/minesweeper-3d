@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class PointClick : MonoBehaviour, IMouse
 {
-	public float sensitivity = .1f;
+	public float sensitivity = .001f;
 	public Transform eventSystem;
 
 	Vector3 angles;
@@ -48,7 +48,7 @@ public class PointClick : MonoBehaviour, IMouse
 	}
 
 	void OnDisable()
-    {
+	{
 		InputActionMap map = playerInput.currentActionMap;
 
 		InputAction rightClick = map.FindAction("RightClick", true);

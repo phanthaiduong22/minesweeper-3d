@@ -22,9 +22,11 @@ public class GamePlay : MonoBehaviour
 	Cube[,,] cubesArray = new Cube[50, 50, 50];
 
 	bool firstClick;
+	public int newGame = 1;
 	void Start()
 	{
 		firstClick = false;
+		newGame = 1;
 		// GameObject gameClone = Instantiate(cube);
 		// cam = Camera.main;
 		switch (GameValues.Difficulty)
@@ -33,19 +35,19 @@ public class GamePlay : MonoBehaviour
 				rows = 5;
 				cols = 5;
 				heights = 5;
-				nBombs = 10;
+				nBombs = 1;
 				break;
 			case GameValues.Difficulties.Medium:
 				rows = 7;
 				cols = 7;
 				heights = 7;
-				nBombs = 20;
+				nBombs = 15;
 				break;
 			case GameValues.Difficulties.Hard:
 				rows = 10;
 				cols = 10;
 				heights = 10;
-				nBombs = 60;
+				nBombs = 30;
 				break;
 		}
 		randomProportion = 10;
@@ -57,9 +59,12 @@ public class GamePlay : MonoBehaviour
 	void Update()
 	{
 		CheckClicked();
-		if (Cube.GetFlags() == Cube.GetCorrect() && Cube.GetFlags() == nBombs)
+		newGame = 1;
+		if (Cube.GetFlags() == Cube.GetCorrect() && Cube.GetFlags() == nBombs && newGame == 1)
 		{
-			print("Win");
+			// youWinScreen.SetUp();
+			gameOverScreen.SetUp("YOU WIN!!!");
+			newGame = 0;
 		}
 	}
 
@@ -74,7 +79,10 @@ public class GamePlay : MonoBehaviour
 					// Activate nearby cubes
 					//ActivateNearbyCubes(i, j, k);
 					if (cubesArray[i, j, k].isClicked == 1)
+					{
 						ActivateCube(new Vector3Int(i, j, k));
+
+					}
 				}
 			}
 		}
@@ -111,11 +119,11 @@ public class GamePlay : MonoBehaviour
 
 		if (cubesArray[x, y, z].isClicked == 3)
 		{
-			print("gameover from gameplay");
+			// print("gameover from gameplay");
 			ActivateAllBombs();
 			FindObjectOfType<AudioManager>().Play("Lose");
 			cubesArray[x, y, z].isClicked = -1;
-			gameOverScreen.SetUp();
+			gameOverScreen.SetUp("GAME OVER");
 		}
 		if (cubesArray[x, y, z].isClicked == 1)
 		{
@@ -255,7 +263,7 @@ public class GamePlay : MonoBehaviour
 			{
 				ActivateAllBombs();
 				FindObjectOfType<AudioManager>().Play("Lose");
-				gameOverScreen.SetUp();
+				gameOverScreen.SetUp("GAME OVER");
 			}
 			else
 			{
