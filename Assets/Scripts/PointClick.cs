@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class PointClick : MonoBehaviour, IMouse
 {
-	public float sensitivity = .001f;
+	public float sensitivity = .1f;
 	public Transform eventSystem;
 
 	Vector3 angles;
@@ -170,8 +170,9 @@ public class PointClick : MonoBehaviour, IMouse
 		{
 			Vector2 delta = sensitivity * context.ReadValue<Vector2>();
 			Vector3 pos = cam.localPosition;
-			pos.x = Mathf.Clamp(pos.x - delta.x, -10f, 10f);
-			pos.y = Mathf.Clamp(pos.y - delta.y, -8f, 8f);
+			Vector2 target = new Vector2(Mathf.Clamp(pos.x - delta.x, -10f, 10f), Mathf.Clamp(pos.y - delta.y, -5f, 7f));
+			pos.x = Mathf.Lerp(cam.localPosition.x, target.x, 10f*Time.deltaTime);
+			pos.y = Mathf.Lerp(cam.localPosition.y, target.y, 10f*Time.deltaTime);
 			//pos.x -= delta.x;
 			//pos.y -= delta.y;
 			cam.localPosition = pos;
@@ -195,7 +196,7 @@ public class PointClick : MonoBehaviour, IMouse
 			Camera camera = cam.GetComponent<Camera>();
 			float fov = camera.fieldOfView;
 			float target = Mathf.Clamp(fov + delta * 10f, 30f, 90f);
-			camera.fieldOfView = Mathf.Lerp(fov, target, 10f * Time.deltaTime);
+			camera.fieldOfView = Mathf.Lerp(fov, target, 100f * Time.deltaTime);
 		}
 
 	}
