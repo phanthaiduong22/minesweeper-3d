@@ -26,6 +26,9 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	Color color;
 	int nBombs;
 	static bool firstClick;
+	static int nFlags = 0;
+	static int nCorrect = 0;
+
 	void Start()
 	{
 		// this.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.1f);
@@ -72,11 +75,17 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 		{
 			cube.isClicked = 2;
 			cube.FlagColor(true);
+			if (cube.isBomb == 1)
+				nCorrect++;
+			nFlags++;
 		}
 		else if (cube.isClicked == 2)
 		{
 			cube.isClicked = 0;
 			cube.FlagColor(false);
+			if (cube.isBomb == 1)
+				nCorrect--;
+			nFlags--;
 		}
 
 
@@ -186,5 +195,15 @@ public class Cube : MonoBehaviour, IMouse, IPointerEnterHandler, IPointerExitHan
 	public void FirstClick()
     {
 		firstClick = true;
+    }
+
+	public static int GetFlags()
+    {
+		return nFlags;
+    }
+
+	public static int GetCorrect()
+    {
+		return nCorrect;
     }
 }

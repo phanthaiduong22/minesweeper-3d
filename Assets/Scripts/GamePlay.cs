@@ -33,7 +33,7 @@ public class GamePlay : MonoBehaviour
 				rows = 5;
 				cols = 5;
 				heights = 5;
-				nBombs = 10;
+				nBombs = 5;
 				break;
 			case GameValues.Difficulties.Medium:
 				rows = 10;
@@ -57,6 +57,10 @@ public class GamePlay : MonoBehaviour
 	void Update()
 	{
 		CheckClicked();
+		if (Cube.GetFlags() == Cube.GetCorrect() && Cube.GetFlags() == nBombs)
+        {
+			print("Win");
+        }
 	}
 
 	void CheckClicked()
@@ -209,7 +213,7 @@ public class GamePlay : MonoBehaviour
 			int x = Random.Range(0, rows);
 			int y = Random.Range(0, cols);
 			int z = Random.Range(0, heights);
-			if (!notBombs.Contains(new Vector3Int(x, y, z)))
+			if (!notBombs.Contains(new Vector3Int(x, y, z)) && cubesArray[x, y, z].isBomb != 1)
             {
 				cubesArray[x, y, z].isBomb = 1;
 				temp--;
