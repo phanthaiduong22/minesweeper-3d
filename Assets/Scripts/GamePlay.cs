@@ -71,7 +71,9 @@ public class GamePlay : MonoBehaviour
 		bombCounter.text = (nBombs - nFlags).ToString();
 		if (nFlags == Cube.GetCorrect() && nFlags == nBombs && firstClick)
 		{
+			FindObjectOfType<AudioManager>().Play("Win");
 			gameOverScreen.SetUp("YOU WIN!!!");
+			firstClick = false;
 		}
 	}
 
