@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 public class GamePlay : MonoBehaviour
@@ -9,6 +10,7 @@ public class GamePlay : MonoBehaviour
 
 
 	public GameOverScreen gameOverScreen;
+	public Transform BombCounter;
 	// private Camera cam;
 	// Start is called before the first frame update
 	public int rows;
@@ -23,6 +25,8 @@ public class GamePlay : MonoBehaviour
 
 	bool firstClick;
 	public int newGame = 1;
+	Text bombCounter;
+	int nFlags;
 	void Start()
 	{
 		firstClick = false;
@@ -52,6 +56,9 @@ public class GamePlay : MonoBehaviour
 		}
 		randomProportion = 10;
 		CreateCubes(rows, cols, heights);
+		bombCounter = BombCounter.GetComponent<Text>();
+		bombCounter.text = nBombs.ToString();
+		nFlags = 0;
 
 	}
 
@@ -60,9 +67,13 @@ public class GamePlay : MonoBehaviour
 	{
 		CheckClicked();
 		newGame = 1;
-		if (Cube.GetFlags() == Cube.GetCorrect() && Cube.GetFlags() == nBombs && newGame == 1)
+		if (Cube.GetFlags() != nFlags)
 		{
-			// youWinScreen.SetUp();
+			nFlags = Cube.GetFlags();
+		}
+		bombCounter.text = (nBombs - nFlags).ToString();
+		if (nFlags == Cube.GetCorrect() && nFlags == nBombs)
+		{
 			gameOverScreen.SetUp("YOU WIN!!!");
 			newGame = 0;
 		}
