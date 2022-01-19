@@ -29,3 +29,5 @@ https://docs.google.com/document/d/1DFkr-pvs6glbza_2FulF6_yLxId_2863q0OE3GbcDyA/
 # Release:
 v1.0.0: https://github.com/phanthaiduong22/minesweeper-3d/releases/tag/v1.0.0
 
+# Poster:
+![Poster](https://github.com/phanthaiduong22/minesweeper-3d/blob/master/poster.png)
