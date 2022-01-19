@@ -1,4 +1,4 @@
-# minesweeper-3d
+# Minesweeper 3D
 [FINAL] HCMUS - 18CNTN - Game Dev - Final Project - DeepTry Team
 
 # Thành viên - DeepTry Team
