@@ -31,7 +31,7 @@ public class GamePlay : MonoBehaviour
 				rows = 5;
 				cols = 5;
 				heights = 5;
-				nBombs = 10;
+				nBombs = 5;
 				break;
 			case GameValues.Difficulties.Medium:
 				rows = 7;
